@@ -31,23 +31,32 @@
   render();
 
   function initActions(){
-    const covers = dom.booksContainer.querySelectorAll('a');
+    const covers = dom.booksContainer.querySelectorAll('.book__image');
 
     for (const cover of covers){
-      console.log(cover);
+      //console.log(cover);
       const bookId = cover.getAttribute('data-id');
-      console.log(bookId);
+      //console.log(bookId);
 
-      cover.addEventListener('dblclick', function (event) {
+      cover.addEventListener('click', function (event) {
         event.preventDefault();
-        console.log('clicked');
-        favoriteBooks.push(bookId);
-        console.log(favoriteBooks);
-        cover.classList.add('favorite');
+
+        if(!favoriteBooks.bookId && !cover.classList.contains('favorite')){
+
+          favoriteBooks.push(bookId);
+          // console.log(favoriteBooks);
+          cover.classList.add('favorite');
+        } else {
+          // console.log('unclicked');
+          const toRemove = favoriteBooks.indexOf(bookId);
+          //console.log(toRemove);
+          favoriteBooks.splice(toRemove, 1);
+          cover.classList.remove('favorite');
+        }
+        console.log('left', favoriteBooks);
       });
     }
-    
-
-  }  initActions();
-}
   
+  }
+  initActions();
+}
