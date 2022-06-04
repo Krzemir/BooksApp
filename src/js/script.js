@@ -12,6 +12,15 @@
   const templates = {
     bookList: Handlebars.compile(document.querySelector('#template-book').innerHTML)
   };
+  // - To ask:
+  //   const ratingGradient = {
+  //     rat1: 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%)',
+  //     rat2: 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)',
+  //     rat3: 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)',
+  //     rat4: 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)'
+  //   };
+
+  
 
   const favoriteBooks = [];
   const filters = [];
@@ -29,8 +38,26 @@
       thisBook.element = utils.createDOMFromHTML(generatedHTML);
       dom.booksContainer.appendChild(thisBook.element);
 
-      log(thisBook.element);
+      const ratingBar = thisBook.element.querySelector('.book__rating__fill');
+      const ratingValue = ratingBar.innerText;
 
+      const mainRatingValue = ratingValue.slice(0, ratingValue.length-3);
+      log(mainRatingValue);
+      const percentageValue = mainRatingValue*10;
+      log(percentageValue);
+      ratingBar.style.width = percentageValue + '%';
+
+      if(mainRatingValue<6){
+        ratingBar.style.background = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%)';
+      } else if(mainRatingValue > 6 && mainRatingValue <= 8){
+        ratingBar.style.background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
+      } else if (mainRatingValue > 8 && mainRatingValue <= 9){
+        ratingBar.style.background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
+      } else if(mainRatingValue>9){
+        ratingBar.style.background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
+      }
+
+      
 
     }
   
