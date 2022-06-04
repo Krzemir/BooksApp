@@ -5,7 +5,8 @@
 
   const dom = {
     booksContainer: document.querySelector('.books-list'),
-    filterForm: document.querySelector('.filters')
+    filterForm: document.querySelector('.filters'),
+    
    
   };
 
@@ -34,30 +35,45 @@
 
   
       const generatedHTML = templates.bookList(bookId);
-  
       thisBook.element = utils.createDOMFromHTML(generatedHTML);
       dom.booksContainer.appendChild(thisBook.element);
 
       const ratingBar = thisBook.element.querySelector('.book__rating__fill');
-      const ratingValue = ratingBar.innerText;
 
-      const mainRatingValue = ratingValue.slice(0, ratingValue.length-3);
-      log(mainRatingValue);
-      const percentageValue = mainRatingValue*10;
-      log(percentageValue);
-      ratingBar.style.width = percentageValue + '%';
+      const rating = ratingBar.innerText.slice(0, ratingBar.innerText.length-3);
 
-      if(mainRatingValue<6){
-        ratingBar.style.background = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%)';
-      } else if(mainRatingValue > 6 && mainRatingValue <= 8){
-        ratingBar.style.background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
-      } else if (mainRatingValue > 8 && mainRatingValue <= 9){
-        ratingBar.style.background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
-      } else if(mainRatingValue>9){
-        ratingBar.style.background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
-      }
+      const ratingWidth = rating*10;
+      log('this', ratingWidth);
 
+      const ratingBcg = determineRatingBgc(rating);
+      log('this', ratingBcg);
+
+      log('bar:', ratingBar);
       
+      
+      
+
+
+
+      //   const ratingBar = thisBook.element.querySelector('.book__rating__fill');
+      //   const ratingValue = ratingBar.innerText;
+
+      //   const mainRatingValue = ratingValue.slice(0, ratingValue.length-3);
+      //   log(mainRatingValue);
+      //   const percentageValue = mainRatingValue*10;
+      //   log(percentageValue);
+      //   ratingBar.style.width = percentageValue + '%';
+
+      //   if(mainRatingValue<6){
+      //     ratingBar.style.background = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%)';
+      //   } else if(mainRatingValue > 6 && mainRatingValue <= 8){
+      //     ratingBar.style.background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
+      //   } else if (mainRatingValue > 8 && mainRatingValue <= 9){
+      //     ratingBar.style.background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
+      //   } else if(mainRatingValue>9){
+      //     ratingBar.style.background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
+      //   }
+
 
     }
   
@@ -131,6 +147,22 @@
 
     }
   }
+
+  function determineRatingBgc(rating){
+
+    let ratingBcg = '';
+    if(rating<6){
+      ratingBgc = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%)';
+    } else if(rating > 6 && rating <= 8){
+      ratingBgc = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
+    } else if (rating > 8 && rating <= 9){
+      ratingBgc = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
+    } else if(rating>9){
+      ratingBgc = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
+    }
+    return ratingBgc;
+
+  };
 
   initActions();
 }
