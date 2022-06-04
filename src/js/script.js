@@ -28,6 +28,10 @@
   
       thisBook.element = utils.createDOMFromHTML(generatedHTML);
       dom.booksContainer.appendChild(thisBook.element);
+
+      log(thisBook.element);
+
+
     }
   
   }
@@ -66,16 +70,39 @@
         log(event.target.value, event.target.checked);
         if (event.target.checked) {
           filters.push(event.target.value);
-        } 
+        }
         else{
           log(filters.indexOf(event.target.value));
           filters.splice(filters.indexOf(event.target.value, 1));
         }
-          
-         
       }
-      log(filters);
+
+      filter();
     });
+  }
+  
+
+  function filter (){
+
+    for (const book of booksData){
+      let forHidden = false;
+      for (const filter of filters){
+        if (book.details[filter] == false){
+          forHidden = true;
+          break;
+        }
+        // log('book ID', book);
+      }
+      const bookForHidden = dom.booksContainer.querySelector('.book__image' + '[data-id="' + book.id + '"]');
+      //log(bookForHidden);
+
+      if (forHidden == true){
+        bookForHidden.classList.add('hidden');
+      } else {
+        bookForHidden.classList.remove('hidden');
+      }
+
+    }
   }
 
   initActions();
